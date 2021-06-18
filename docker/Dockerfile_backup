@@ -3,17 +3,22 @@
 # Based on Ubuntu 16.04
 # Created by Jorge de la Cruz
 #################################################################
-FROM jorgedlcruz/zimbra
+FROM ubuntu:16.04
 MAINTAINER Jorge de la Cruz <jorgedlcruz@gmail.com>
 
 RUN echo "resolvconf resolvconf/linkify-resolvconf boolean false" | debconf-set-selections
 
-RUN apt-get update -y
-RUN apt-get install -y software-properties-common
-RUN apt-get install -y language-pack-en-base
-RUN export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8
-
-RUN apt-get update -y && apt-get install -y iputils-ping
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
+  wget \
+  dialog \
+  openssh-client \
+  software-properties-common \
+  dnsmasq \
+  dnsutils \
+  net-tools \
+  sudo \
+  rsyslog \
+  unzip
 
 VOLUME ["/opt/zimbra"]
 
